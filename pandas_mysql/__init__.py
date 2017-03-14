@@ -15,7 +15,7 @@ class PandasMySQL:
         self.port = port
         self.user = usr
         self.pwd = pwd
-        print("MySQL url : mysql://{0}:{1}@{2}:{3}".format(self.user, self.pwd, self.host, self.port))
+        print("MySQL url : pandas_mysql://{0}:{1}@{2}:{3}".format(self.user, self.pwd, self.host, self.port))
 
     def execute_stored_procedure(self, proc_name, params, base):
         """
@@ -40,7 +40,7 @@ class PandasMySQL:
         :return:
         """
         engine = create_engine(
-            'mysql+mysqlconnector://{0}:{1}@{2}:{3}/{4}?charset=utf8'.format(self.user, self.pwd, self.host,
+            'pandas_mysql+mysqlconnector://{0}:{1}@{2}:{3}/{4}?charset=utf8'.format(self.user, self.pwd, self.host,
                                                                              str(self.port), db), echo=False)
         return engine
 

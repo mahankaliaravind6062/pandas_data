@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='PandasData',
     version='0.1',
-    packages=['mysql', 'mongodb'],
+    packages=['pandas_mysql', 'pandas_mongodb'],
     url='',
     license='Raphaël Courivaud',
     author='Raphaël Courivaud',
