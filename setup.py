@@ -1,9 +1,9 @@
 from distutils.core import setup
 
 setup(
-    name='MySQLHandler',
+    name='PandasData',
     version='0.1',
-    packages=['PandasMySQL', 'PandasMongoDB'],
+    packages=['mysql', 'mongodb'],
     url='',
     license='Raphaël Courivaud',
     author='Raphaël Courivaud',

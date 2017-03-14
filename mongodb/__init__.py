@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import pandas as pd
 
+
 class PandasMongoDB:
     def __init__(self, host="localhost", port=27017):
         self.host = host
