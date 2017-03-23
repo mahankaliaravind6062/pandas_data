@@ -1,6 +1,6 @@
-from pandas.io import sql
 import pandas as pd
-from sqlalchemy import create_engine
+import sqlalchemy
+from pandas.io import sql
 
 
 class PandasMySQL:
@@ -39,7 +39,7 @@ class PandasMySQL:
         :param db:
         :return:
         """
-        engine = create_engine(
+        engine = sqlalchemy.create_engine(
             'mysql+mysqlconnector://{0}:{1}@{2}:{3}/{4}?charset=utf8'.format(self.user, self.pwd, self.host,
                                                                              str(self.port), db), echo=False)
         return engine
@@ -64,14 +64,19 @@ class PandasMySQL:
 
     def to_csv(self, dataframe, file_path, encoding="utf-8", index=False):
         """
+        :param encoding:
+        :param index:
         :param dataframe:
         :param file_path:
         :return:
         """
-        dataframe.to_csv("./" + file_path, encoding=encoding, index=index, )
+        dataframe.to_csv("./" + file_path, encoding=encoding, index=index)
 
-    def to_database(self, dataframe, name, db, if_exists, chunksize=50e3, dtypes={}):
+    def to_database(self, dataframe, name, db, if_exists, chunksize=50e3, dtypes=None, index=False):
         """
+
+        Upload dataframe to table in selected SQL database
+
         :param dataframe:
         :param name:
         :param db:
@@ -81,12 +86,42 @@ class PandasMySQL:
         :return:
         """
 
+        if dtypes is None:
+            dtypes = {}
         conn = self.connect_to_database(db=db)
         if dataframe.shape[0] != 0:
             print(
                 "Writing to table : " + name + " and database : " + db + " if exists : " + if_exists + " shape : " + str(
                     dataframe.shape))
-        dataframe.to_sql(name=name, con=conn, if_exists=if_exists, chunksize=chunksize, dtype=dtypes)
+            try:
+                dataframe.to_sql(name=name, con=conn, if_exists=if_exists, chunksize=chunksize, dtype=dtypes)
+            except:
+                print("Bug in uploading dataframe, it has been writen in error_uploading{}:{}.csv".format(db, name))
+                self.to_csv(dataframe=dataframe, file_path="error_uploading{}:{}.csv".format(db, name), index=index)
+
+        else:
+            print("Dataframe is empty")
+
+    @staticmethod
+    def create_dtypes_str(df, max_size_string=None):
+        """
+        Basic sqlalchemy connection upload string with text type.
+        Calculate optimum size for SQL columns
+
+        :param df:
+        :param max_size_string:
+        :return:
+        """
+        df_types = {n: str(t) for n, t in zip(df.columns, df.dtypes.values)}
+
+        dstr = {n: str(t) for n, t in zip(df.columns, df.dtypes.values) if t == "object"}
+        if max_size_string:
+            d_size_str = {n: (df[n].str.len().max() if df[n].str.len().max() < max_size_string else max_size_string) for
+                          n, t in dstr.items()}
+        else:
+            d_size_str = {n: df[n].str.len().max() for n, t in dstr.items()}
+
+        return {n: sqlalchemy.types.VARCHAR(v) for n, v in d_size_str.items()}
 
     def drop_table(self, name, db):
         """
