@@ -7,13 +7,15 @@ class PandasMongoDB:
         self.host = host
         self.port = port
         self.client = MongoClient(host, port)
-        if usr and pwd:
-            self.client.the_database.authenticate(usr,pwd)
+        self.usr = usr
+        self.pwd = pwd
         print(self.client.database_names())
 
     def get_dataframe_from_collection(self, db, col, find_query=None):
         if find_query is None:
             find_query = {}
+        if self.usr and self.pwd:
+            self.client[db].authenticate(self.usr, self.pwd, mechanism='SCRAM-SHA-1')
         return pd.DataFrame(list(self.client[db][col].find(find_query)))
 
     def insert_dataframe_into_collection(self, db, col, dataframe):

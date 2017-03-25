@@ -10,8 +10,7 @@ setup(
     install_requirement=[
         'pandas',
         'sqlalchemy',
-        'pymongo',
-        "https://github.com/rcourivaud/PandasData"
+        'pymongo'
     ],
     author_email='r.courivaud@gmail.com',
     description='Python library used to deal with database and python pandas', requires=['pandas', 'pymongo',
