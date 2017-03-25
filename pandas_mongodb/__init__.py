@@ -9,7 +9,6 @@ class PandasMongoDB:
         self.client = MongoClient(host, port)
         self.usr = usr
         self.pwd = pwd
-        print(self.client.database_names())
 
     def get_dataframe_from_collection(self, db, col, find_query=None):
         if find_query is None:
