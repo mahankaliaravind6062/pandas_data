@@ -72,7 +72,7 @@ class PandasMySQL:
         """
         dataframe.to_csv("./" + file_path, encoding=encoding, index=index)
 
-    def to_database(self, dataframe, name, db, if_exists, chunksize=50e3, dtypes=None, index=False):
+    def to_database(self, dataframe, name, db, if_exists, chunksize=50000, dtypes=None, index=False):
         """
 
         Upload dataframe to table in selected SQL database
