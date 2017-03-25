@@ -3,10 +3,12 @@ import pandas as pd
 
 
 class PandasMongoDB:
-    def __init__(self, host="localhost", port=27017):
+    def __init__(self, host="localhost", port=27017, usr=None, pwd=None):
         self.host = host
         self.port = port
         self.client = MongoClient(host, port)
+        if usr and pwd:
+            self.client.the_database.authenticate(usr,pwd)
         print(self.client.database_names())
 
     def get_dataframe_from_collection(self, db, col, find_query=None):
