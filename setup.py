@@ -3,16 +3,19 @@ from distutils.core import setup
 setup(
     name='PandasData',
     version='0.1',
-    packages=['pandas_mysql', 'pandas_mongodb'],
+    packages=['pandas_data.pandas_mysql', 'pandas_data.pandas_mongodb', 'pandas_textmining.tfidf_transformer'],
     url='',
-    license='Raphaël Courivaud',
+    license='',
     author='Raphaël Courivaud',
-    install_requirement=[
+    author_email='r.courivaud@gmail.com',
+    description='',
+    install_require=[
+        'nltk',
+        'nltk[punkt]',
+        'nltk[stopwords]',
+        'sklearn',
         'pandas',
-        'sqlalchemy',
         'pymongo'
     ],
-    author_email='r.courivaud@gmail.com',
-    description='Python library used to deal with database and python pandas', requires=['pandas', 'pymongo',
-                                                                                         'sqlalchemy']
+    requires=['nltk', 'sklearn', 'pandas', 'pymongo', 'sqlalchemy']
 )
