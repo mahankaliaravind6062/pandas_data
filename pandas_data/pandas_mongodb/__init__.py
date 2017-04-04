@@ -33,10 +33,10 @@ class PandasMongoDB:
             if self.usr and self.pwd:
                 if self.client[db].authenticate(self.usr, self.pwd, mechanism='SCRAM-SHA-1'):
                     self.is_authentificate[db] = True
-                    return True
+                    print("Authentified on db :" + db)
                 else:
                     self.is_authentificate[db] = False
-        return False
+        return self.is_authentificate[db]
 
     def insert_dataframe_into_collection(self, db, col, dataframe):
         if self.authentificate(db):
