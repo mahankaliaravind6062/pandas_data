@@ -22,12 +22,12 @@ class PandasMongoDB:
 
     def get_all_collections(self, db):
         if self.authentificate(db):
-            return self.client.db.collection_names()
+            return self.client[db].collection_names()
         else:
             print("Error on authentification")
 
     def authentificate(self, db):
-        if self.is_authentificate.get(db, False):
+        if not self.usr and not self.pwd or self.is_authentificate.get(db, False):
             return True
         else:
             if self.usr and self.pwd:

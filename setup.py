@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='PandasData',
-    version='',
+    version='0.1',
     packages=['pandas_data', 'pandas_data.pandas_mysql', 'pandas_data.pandas_mongodb',
               'pandas_textmining.tfidf_transformer'],
     url='',
