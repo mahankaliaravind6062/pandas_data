@@ -94,7 +94,8 @@ class PandasMySQL:
                 "Writing to table : " + name + " and database : " + db + " if exists : " + if_exists + " shape : " + str(
                     dataframe.shape))
             try:
-                dataframe.to_sql(name=name, con=conn, if_exists=if_exists, chunksize=chunksize, dtype=dtypes)
+                dataframe.to_sql(name=name, con=conn, if_exists=if_exists, chunksize=chunksize, dtype=dtypes,
+                                 index=False)
             except Exception as e:
                 print(e)
                 print("Bug in uploading dataframe, it has been writen in error_uploading{}:{}.csv".format(db, name))
