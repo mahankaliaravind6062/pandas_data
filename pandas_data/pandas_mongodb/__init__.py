@@ -20,6 +20,12 @@ class PandasMongoDB:
         else:
             print("Error on authentification")
 
+    def get_all_collections(self, db):
+        if self.authentificate(db):
+            return self.client.db.collections_names()
+        else:
+            print("Error on authentification")
+
     def authentificate(self, db):
         if self.is_authentificate.get(db, False):
             return True
