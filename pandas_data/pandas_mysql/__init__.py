@@ -95,9 +95,9 @@ class PandasMySQL:
                     dataframe.shape))
             try:
                 dataframe.to_sql(name=name, con=conn, if_exists=if_exists, chunksize=chunksize, dtype=dtypes)
-            except:
+            except Exception as e:
                 print("Bug in uploading dataframe, it has been writen in error_uploading{}:{}.csv".format(db, name))
-                self.to_csv(dataframe=dataframe, file_path="error_uploading{}:{}.csv".format(db, name), index=index)
+                self.to_csv(dataframe=dataframe, file_path="error_uploading{}_{}.csv".format(db, name), index=index)
 
         else:
             print("Dataframe is empty")
