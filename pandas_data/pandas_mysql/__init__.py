@@ -101,7 +101,7 @@ class PandasMySQL:
                                  chunksize=chunksize,
                                  dtype=dtypes,
                                  index=index)
-                conn.close()
+                conn.connect().close()
             except Exception as e:
                 print(e)
                 print("Bug in uploading dataframe, it has been writen in error_uploading{}_{}.csv".format(db, name))
