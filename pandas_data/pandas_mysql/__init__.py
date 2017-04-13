@@ -88,15 +88,15 @@ class PandasMySQL:
 
         if dtypes is None:
             dtypes = {}
-        conn = self.connect_to_database(db=db)
+        conn = self.connect_to_database(db=db).connect().connection
         if dataframe.shape[0] != 0:
             print(
                 "Writing to table : " + name + " and database : " + db + " if exists : " + if_exists + " shape : " + str(
                     dataframe.shape))
             try:
-                connec = dataframe.to_sql(name=name, con=conn, if_exists=if_exists, chunksize=chunksize, dtype=dtypes,
-                                          index=False)
-                connec.close()
+                dataframe.to_sql(name=name, con=conn, if_exists=if_exists, chunksize=chunksize, dtype=dtypes,
+                                 index=False)
+                conn.close()
             except Exception as e:
                 print(e)
                 print("Bug in uploading dataframe, it has been writen in error_uploading{}:{}.csv".format(db, name))
