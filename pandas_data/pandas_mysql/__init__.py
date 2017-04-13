@@ -88,7 +88,7 @@ class PandasMySQL:
 
         if dtypes is None:
             dtypes = {}
-        conn = self.connect_to_database(db=db).connect().connection
+        conn = self.connect_to_database(db=db)
         if dataframe.shape[0] != 0:
             print(
                 "Writing to table : " + name + " and database : " + db + " if exists : " + if_exists + " shape : " + str(
