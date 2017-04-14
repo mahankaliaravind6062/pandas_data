@@ -39,9 +39,19 @@ class PandasMySQL:
         :param db:
         :return:
         """
-        engine = sqlalchemy.create_engine(
+        try:
+            engine = sqlalchemy.create_engine(
             'mysql://{0}:{1}@{2}:{3}/{4}?charset=utf8'.format(self.user, self.pwd, self.host,
                                                               str(self.port), db), echo=False)
+        except:
+            try:
+                engine = sqlalchemy.create_engine(
+                    'mysql+mysqldb://{0}:{1}@{2}:{3}/{4}?charset=utf8'.format(self.user, self.pwd, self.host,
+                                                                              str(self.port), db), echo=False)
+            except:
+                engine = sqlalchemy.create_engine(
+                    'mysql+mysqlconnector://{0}:{1}@{2}:{3}/{4}?charset=utf8'.format(self.user, self.pwd, self.host,
+                                                                                     str(self.port), db), echo=False)
         return engine
 
     def open_csv_file(self, path, **args):
