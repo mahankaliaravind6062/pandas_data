@@ -60,7 +60,10 @@ class PandasMySQL:
         :return: Pandas dataframe
         """
         engine = self.connect_to_database(db=db)
-        return pd.read_sql_table(table_name=table_name, con=engine)
+        df = pd.read_sql_table(table_name=table_name, con=engine)
+        engine.connect().connection.close()
+        return df
+
 
     def to_csv(self, dataframe, file_path, encoding="utf-8", index=False):
         """
