@@ -47,12 +47,12 @@ class PandasMongoDB:
         print(col)
         print(dataframe.shape)
         if self.authentificate(db):
-            try:
+            """try:
                 self.client[db][col].insert_many(dataframe.to_dict('records'))
             except Exception as e:
-                print(e)
-                for r, row in tqdm(dataframe.iterrows()):
-                    self.client[db][col].insert_one(row.to_dict())
+                print(e)"""
+            for r, row in tqdm(dataframe.iterrows()):
+                self.client[db][col].insert_one(row.to_dict())
         else:
             print("Error on authentification")
 
