@@ -43,6 +43,9 @@ class PandasMongoDB:
         return self.is_authentificate[db]
 
     def insert_dataframe_into_collection(self, db, col, dataframe):
+        print(db)
+        print(col)
+        print(dataframe.shape)
         if self.authentificate(db):
             try:
                 self.client[db][col].insert_many(dataframe.to_dict('records'))
