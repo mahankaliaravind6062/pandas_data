@@ -46,10 +46,10 @@ class PandasMongoDB:
         if self.authentificate(db):
             try:
                 self.client[db][col].insert_many(dataframe.to_dict('records'))
-            except Exception as e:
-                if isinstance(e, BulkWriteError):
-                    for r, row in tqdm(dataframe.iterrows()):
-                        self.client[db][col].insert_one(row.to_dict())
+            except BulkWriteError as bwe:
+                print(bwe.details)
+                for r, row in tqdm(dataframe.iterrows()):
+                    self.client[db][col].insert_one(row.to_dict())
         else:
             print("Error on authentification")
 
