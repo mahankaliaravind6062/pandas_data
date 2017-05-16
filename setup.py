@@ -7,7 +7,7 @@ setup(
     name='pandas_data',
     version='0.1',
     packages=['pandas_data', 'pandas_data.pandas_mysql', 'pandas_data.pandas_mongodb',
-              'pandas_textmining.tfidf_transformer'],
+              'pandas_data.pandas_textmining', "pandas_data.pandas_elasticsearch"],
     url='',
     license='',
     author='Raphaël Courivaud',
