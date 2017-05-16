@@ -1,6 +1,5 @@
 import pandas as pd
 from pymongo import MongoClient
-from pymongo.errors import BulkWriteError
 from tqdm import tqdm
 
 
@@ -43,16 +42,12 @@ class PandasMongoDB:
         return self.is_authentificate[db]
 
     def insert_dataframe_into_collection(self, db, col, dataframe):
-        print(db)
-        print(col)
-        print(dataframe.shape)
         if self.authentificate(db):
-            """try:
-                self.client[db][col].insert_many(dataframe.to_dict('records'))
+            try:
+                self.client[db][col].insert_many(dataframe.to_dict('records'), ordered=False)
             except Exception as e:
-                print(e)"""
-            for r, row in tqdm(dataframe.iterrows()):
-                self.client[db][col].insert_one(row.to_dict())
+                for r, row in tqdm(dataframe.iterrows()):
+                    self.client[db][col].insert_one(row.to_dict())
         else:
             print("Error on authentification")
 

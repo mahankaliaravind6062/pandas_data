@@ -74,6 +74,23 @@ class PandasMySQL:
         engine.connect().connection.close()
         return df
 
+    def read_table_from_query(self, db, query):
+        """
+        :param db:
+        :param query:
+        :return:
+        """
+        engine = self.connect_to_database(db=db)
+        df = pd.read_sql_query(query, engine)
+        engine.connect().connection.close()
+        return df
+
+    def execute_query(self, db, query):
+        assert isinstance(query, str)
+        assert "select" not in query.lower()
+        conn = self.connect_to_database(db=db).connect()
+        conn.execute(query)
+        conn.connection.close()
 
     def to_csv(self, dataframe, file_path, encoding="utf-8", index=False):
         """
@@ -87,7 +104,6 @@ class PandasMySQL:
 
     def to_database(self, dataframe, name, db, if_exists, chunksize=50000, dtypes=None, index=False):
         """
-
         Upload dataframe to table in selected SQL database
 
         :param dataframe:

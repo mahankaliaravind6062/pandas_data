@@ -1,5 +1,8 @@
 from distutils.core import setup
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
 setup(
     name='pandas_data',
     version='0.1',
@@ -10,13 +13,9 @@ setup(
     author='Raphaël Courivaud',
     author_email='',
     description='',
-    install_require=[
-        'nltk',
+    install_require=required + [
         'nltk[punkt]',
         'nltk[stopwords]',
-        'sklearn',
-        'pandas',
-        'pymongo'
     ],
     requires=['nltk', 'sklearn', 'pandas', 'pymongo', 'sqlalchemy']
 )
