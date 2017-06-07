@@ -102,7 +102,7 @@ class PandasMySQL:
         """
         dataframe.to_csv("./" + file_path, encoding=encoding, index=index)
 
-    def to_database(self, dataframe, name, db, if_exists, chunksize=50000, dtypes=None, index=False):
+    def to_database(self, dataframe, name, db, if_exists, chunksize=50000, dtypes=None, index=False, save_if_error=False):
         """
         Upload dataframe to table in selected SQL database
 
@@ -134,7 +134,8 @@ class PandasMySQL:
             except Exception as e:
                 print(e)
                 print("Bug in uploading dataframe, it has been writen in error_uploading{}_{}.csv".format(db, name))
-                self.to_csv(dataframe=dataframe, file_path="error_uploading{}_{}.csv".format(db, name), index=index)
+                if save_if_error:
+                    self.to_csv(dataframe=dataframe, file_path="error_uploading{}_{}.csv".format(db, name), index=index)
 
         else:
             print("Dataframe is empty")
