@@ -87,7 +87,7 @@ class PandasMySQL:
 
     def execute_query(self, db, query):
         assert isinstance(query, str)
-        assert "select" not in query.lower()
+        assert not query.lower().startswith("select")
         conn = self.connect_to_database(db=db).connect()
         conn.execute(query)
         conn.connection.close()
