@@ -29,6 +29,15 @@ class PandasMongoDB:
         else:
             print("Error on authentification")
 
+    def insert_one(self, doc, db, col):
+        if self.authentificate(db):
+            try:
+                self.client[db][col].insert_one(doc)
+            except:
+                pass
+        else:
+            print("Error on authentification")
+
     def authentificate(self, db):
         if not self.usr and not self.pwd or self.is_authentificate.get(db, False):
             return True
