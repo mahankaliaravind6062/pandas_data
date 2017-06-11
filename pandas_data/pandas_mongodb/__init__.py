@@ -33,8 +33,8 @@ class PandasMongoDB:
         if self.authentificate(db):
             try:
                 self.client[db][col].insert_one(doc)
-            except:
-                pass
+            except Exception as e:
+                print(e)
         else:
             print("Error on authentification")
 
