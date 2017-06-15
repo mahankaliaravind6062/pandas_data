@@ -89,9 +89,11 @@ class PandasMySQL:
         assert isinstance(query, str)
         #assert not query.lower().startswith("select")
         conn = self.connect_to_database(db=db).connect()
-        conn.execute(query)
+        result = conn.execute(query)
         conn.connection.close()
+        return result
 
+        
     def to_csv(self, dataframe, file_path, encoding="utf-8", index=False):
         """
         :param encoding:
