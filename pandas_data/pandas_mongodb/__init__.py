@@ -51,12 +51,14 @@ class PandasMongoDB:
         return self.is_authentificate[db]
 
     def insert_dataframe_into_collection(self, db, col, dataframe):
+        dataframe["_id"] = dataframe.index
         if self.authentificate(db):
             try:
-                self.client[db][col].insert_many(dataframe.to_dict('records'), ordered=False)
+                self.client[db][col].insert_many(
+                    [{k: v for k, v in elt.items() if v} for elt in dataframe.to_dict('records')], ordered=False)
             except Exception as e:
                 for r, row in tqdm(dataframe.iterrows()):
-                    self.client[db][col].insert_one(row.to_dict())
+                    self.client[db][col].insert_one({k: v for k, v in row.to_dict() if v})
         else:
             print("Error on authentification")
 
