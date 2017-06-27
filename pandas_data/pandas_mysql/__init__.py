@@ -107,15 +107,6 @@ class PandasMySQL:
     def to_database(self, dataframe, name, db, if_exists, chunksize=50000, dtypes=None, index=False, save_if_error=False):
         """
         Upload dataframe to table in selected SQL database
-
-        :param dataframe:
-        :param name:
-        :param db:
-        :param if_exists:
-        :param chunksize:
-        :param dtypes:
-        :param index:
-        :return:
         """
 
         if dtypes is None:
