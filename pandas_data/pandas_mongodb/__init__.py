@@ -12,14 +12,16 @@ class PandasMongoDB:
         self.pwd = pwd
         self.is_authentificate = {}
 
-    def get_dataframe_from_collection(self, db, col, limit=None, find_query=None):
+    def get_dataframe_from_collection(self, db, col, limit=None, find_query=None, select_query=None):
         if not find_query:
             find_query = {}
+        if not select_query:
+            select_query = {}
 
         if self.authentificate(db):
             if not limit:
                 limit = self.client[db][col].count()
-            return pd.DataFrame(list(self.client[db][col].find(find_query).limit(limit)))
+            return pd.DataFrame(list(self.client[db][col].find(find_query, select_query).limit(limit)))
         else:
             print("Error on authentification")
 
